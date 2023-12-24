@@ -26,19 +26,19 @@ function findLastIndexOf(str, target) {
 }
 findLastIndexOf("Hello World World", "World");
 
-// slice
+console.log("slice");
 function getSlice(str, start, end) {
   console.log("Original String:", str);
   console.log("After slice:", str.slice(start, end));
 }
-getSlice("Hello World", 0, 5);
+getSlice("Hello World", 0, 6);
 
-// substring
+console.log("substring");
 function getSubstring(str, start, end) {
   console.log("Original String:", str);
   console.log("After substring:", str.substring(start, end));
 }
-getSubstring("Hello World", 0, 5);
+getSubstring("Hello World", 0, 6);
 
 // replace
 function replaceString(str, target, replacement) {
