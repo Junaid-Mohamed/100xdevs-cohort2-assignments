@@ -74,3 +74,12 @@ function toLower(str) {
   console.log("After toLowerCase:", str.toLowerCase());
 }
 toLower("Hello World");
+
+//regex to remove extra whitespace in a string.
+
+function replaceString(str) {
+  console.log("Original string: ", str);
+  console.log("After replaceString:", str.replace(/\s+/g, " ").trim());
+}
+
+replaceString("hello     world    my    name   is       raman");
