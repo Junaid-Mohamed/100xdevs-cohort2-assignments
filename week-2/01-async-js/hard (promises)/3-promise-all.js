@@ -22,6 +22,14 @@ function wait3(t) {
   });
 }
 
-function calculateTime(t1, t2, t3) {}
+function calculateTime(t1, t2, t3) {
+  let start = Date.now();
+  const promise1 = wait1(t1);
+  const promise2 = wait2(t2);
+  const promise3 = wait3(t3);
+  return Promise.all([promise1, promise2, promise3]).then(
+    () => Date.now() - start
+  );
+}
 
 module.exports = calculateTime;

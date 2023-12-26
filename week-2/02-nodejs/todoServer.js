@@ -39,11 +39,84 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require("express");
+const bodyParser = require("body-parser");
+// const { todo } = require("./todos.json");
+
+// console.log(todo);
+const PORT = 3001;
+const app = express();
+const fs = require("fs");
+
+const filePath = "./todos.json";
+
+app.use(bodyParser.json());
+// or can  use app.use(express.json());
+
+// const todoData = fs.readFileSync(filePath, "utf8");
+
+let todoData = [];
+
+// console.log(todoData);
+
+app.get("/todos", (req, res) => {
+  res.json(todoData);
+});
+
+app.get("/todos/:id", (req, res) => {
+  // console.log(typeof req.params.id);
+  const todo = todoData.find((todo) => todo.id === parseInt(req.params.id));
+  if (!todo) {
+    res.status(404).send("Not found");
+  } else {
+    res.json(todo);
+  }
+});
+
+app.post("/todos", (req, res) => {
+  const todo = {
+    id: Math.floor(Math.random() * 1000),
+    title: req.body.title,
+    description: req.body.description,
+  };
+  todoData.push(todo);
+  res.status(201).json({ id: todo.id });
+});
+
+app.put("/todos/:id", (req, res) => {
+  const todoIndex = todoData.findIndex(
+    (todo) => todo.id === parseInt(req.params.id)
+  );
+  if (todoIndex === -1) {
+    res.status(404).send("Not found");
+  } else {
+    const title = req.body.title;
+    const desc = req.body.description;
+    todoData[todoIndex] = {
+      id: parseInt(req.params.id),
+      title: title,
+      description: desc,
+    };
+    res.status(200).send(todoData[todoIndex]);
+  }
+});
+
+app.delete("/todos/:id", (req, res) => {
+  const todoIndex = todoData.findIndex(
+    (todo) => todo.id === parseInt(req.params.id)
+  );
+  if (todoIndex === -1) {
+    res.status(404).send("Not found");
+  } else {
+    todoData.splice(todoIndex, 1);
+    res.status(200).send("deleted successfully");
+  }
+});
+
+app.use((req, res, next) => {
+  res.status(404).send("Not found");
+});
+
+app.listen(PORT, () => console.log("listening on port", PORT));
+
+module.exports = app;
