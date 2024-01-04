@@ -19,14 +19,19 @@ router.post("/signup", (req, res) => {
 router.post("/courses", adminMiddleware, (req, res) => {
   // Implement course creation logic
   Course.create({
-    id: req.body.id,
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
     imageLink: req.body.imageLink,
     published: req.body.published,
+  }).then((course) => {
+    res
+      .status(200)
+      .json({
+        Message: "Course create successfully.",
+        "course id": course._id,
+      });
   });
-  res.status(200).send("Course create successfully.");
 });
 
 router.get("/courses", adminMiddleware, (req, res) => {
