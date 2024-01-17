@@ -1,0 +1,15 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  box-sizing: border-box;
+}
+
+.card{
+
+  margin: 2rem;
+  padding: 2rem;
+  background-color: aqua;
+}
